@@ -1,15 +1,15 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
-import { ICompany } from "@/types/backend";
-import { callFetchCompanyById } from "@/config/api";
+import { INews } from "@/types/backend";
+import { callFetchNewsById } from "@/config/api";
 import styles from 'styles/client.module.scss';
 import parse from 'html-react-parser';
 import { Col, Divider, Row, Skeleton } from "antd";
 import { EnvironmentOutlined } from "@ant-design/icons";
 
 
-const ClientCompanyDetailPage = (props: any) => {
-    const [companyDetail, setCompanyDetail] = useState<ICompany | null>(null);
+const ClientNewsDetailPage = (props: any) => {
+    const [newsDetail, setNewsDetail] = useState<INews | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     let location = useLocation();
@@ -20,9 +20,9 @@ const ClientCompanyDetailPage = (props: any) => {
         const init = async () => {
             if (id) {
                 setIsLoading(true)
-                const res = await callFetchCompanyById(id);
+                const res = await callFetchNewsById(id);
                 if (res?.data) {
-                    setCompanyDetail(res.data)
+                    setNewsDetail(res.data)
                 }
                 setIsLoading(false)
             }
@@ -36,32 +36,32 @@ const ClientCompanyDetailPage = (props: any) => {
                 <Skeleton />
                 :
                 <Row gutter={[20, 20]}>
-                    {companyDetail && companyDetail.id &&
+                    {newsDetail && newsDetail.id &&
                         <>
                             <Col span={24} md={16}>
                                 <div className={styles["header"]}>
-                                    {companyDetail.name}
+                                    {newsDetail.title}
                                 </div>
 
                                 <div className={styles["location"]}>
-                                    <EnvironmentOutlined style={{ color: '#58aaab' }} />&nbsp;{(companyDetail?.address)}
+                                    <EnvironmentOutlined style={{ color: '#58aaab' }} />&nbsp;{(newsDetail?.author)}
                                 </div>
 
                                 <Divider />
-                                {parse(companyDetail?.description ?? "")}
+                                {parse(newsDetail?.content ?? "")}
                             </Col>
 
                             <Col span={24} md={8}>
-                                <div className={styles["company"]}>
+                                <div className={styles["news"]}>
                                     <div>
                                         <img
                                             width={200}
                                             alt="example"
-                                            src={`${import.meta.env.VITE_BACKEND_URL}/storage/company/${companyDetail?.logo}`}
+                                            src={`${import.meta.env.VITE_BACKEND_URL}/storage/news/${newsDetail?.image}`}
                                         />
                                     </div>
                                     <div>
-                                        {companyDetail?.name}
+                                        {newsDetail?.title}
                                     </div>
                                 </div>
                             </Col>
@@ -72,4 +72,4 @@ const ClientCompanyDetailPage = (props: any) => {
         </div>
     )
 }
-export default ClientCompanyDetailPage;
+export default ClientNewsDetailPage;

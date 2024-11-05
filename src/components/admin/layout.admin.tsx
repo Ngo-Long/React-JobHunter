@@ -10,6 +10,7 @@ import {
     AliwangwangOutlined,
     BugOutlined,
     ScheduleOutlined,
+    ContainerOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu, Dropdown, Space, message, Avatar, Button } from 'antd';
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -70,12 +71,18 @@ const LayoutAdmin = () => {
                 && item.method === ALL_PERMISSIONS.USERS.GET_PAGINATE.method
             )
 
+            const viewNews = permissions?.find(item =>
+                item.apiPath === ALL_PERMISSIONS.NEWS.GET_PAGINATE.apiPath
+                && item.method === ALL_PERMISSIONS.NEWS.GET_PAGINATE.method
+            )
+
             const full = [
                 {
                     label: <Link to='/admin'>Dashboard</Link>,
                     key: '/admin',
                     icon: <AppstoreOutlined />
                 },
+
                 ...(viewCompany || ACL_ENABLE === 'false' ? [{
                     label: <Link to='/admin/company'>Company</Link>,
                     key: '/admin/company',
@@ -87,6 +94,7 @@ const LayoutAdmin = () => {
                     key: '/admin/user',
                     icon: <UserOutlined />
                 }] : []),
+
                 ...(viewJob || ACL_ENABLE === 'false' ? [{
                     label: <Link to='/admin/job'>Job</Link>,
                     key: '/admin/job',
@@ -98,18 +106,24 @@ const LayoutAdmin = () => {
                     key: '/admin/resume',
                     icon: <AliwangwangOutlined />
                 }] : []),
+
                 ...(viewPermission || ACL_ENABLE === 'false' ? [{
                     label: <Link to='/admin/permission'>Permission</Link>,
                     key: '/admin/permission',
                     icon: <ApiOutlined />
                 }] : []),
+
                 ...(viewRole || ACL_ENABLE === 'false' ? [{
                     label: <Link to='/admin/role'>Role</Link>,
                     key: '/admin/role',
                     icon: <ExceptionOutlined />
                 }] : []),
 
-
+                ...(viewNews || ACL_ENABLE === 'false' ? [{
+                    label: <Link to='/admin/news'>News</Link>,
+                    key: '/admin/news',
+                    icon: <ContainerOutlined />
+                }] : []),
 
             ];
 
@@ -208,11 +222,13 @@ const LayoutAdmin = () => {
                             </Dropdown>
                         </div>
                     }
+
                     <Content style={{ padding: '15px' }}>
                         <Outlet />
                     </Content>
+
                     {/* <Footer style={{ padding: 10, textAlign: 'center' }}>
-                        React Typescript series Nest.JS &copy; Hỏi Dân IT - Made with <HeartTwoTone />
+                        React Typescript series Nest.JS &copy;
                     </Footer> */}
                 </Layout>
             </Layout>

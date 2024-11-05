@@ -30,6 +30,9 @@ import ClientJobDetailPage from './pages/job/detail';
 import ClientCompanyPage from './pages/company';
 import ClientCompanyDetailPage from './pages/company/detail';
 import JobTabs from './pages/admin/job/job.tabs';
+import ClientNewsPage from './pages/news';
+import ClientNewsDetailPage from './pages/news/detail';
+import NewsPage from './pages/admin/news';
 
 const LayoutClient = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -46,9 +49,11 @@ const LayoutClient = () => {
   return (
     <div className='layout-app' ref={rootRef}>
       <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
       <div className={styles['content-app']}>
         <Outlet context={[searchTerm, setSearchTerm]} />
       </div>
+
       <Footer />
     </div>
   )
@@ -75,10 +80,15 @@ export default function App() {
       errorElement: <NotFound />,
       children: [
         { index: true, element: <HomePage /> },
+
         { path: "job", element: <ClientJobPage /> },
         { path: "job/:id", element: <ClientJobDetailPage /> },
+
         { path: "company", element: <ClientCompanyPage /> },
-        { path: "company/:id", element: <ClientCompanyDetailPage /> }
+        { path: "company/:id", element: <ClientCompanyDetailPage /> },
+
+        { path: "news", element: <ClientNewsPage /> },
+        { path: "news/:id", element: <ClientNewsDetailPage /> }
       ],
     },
 
@@ -107,7 +117,6 @@ export default function App() {
               <UserPage />
             </ProtectedRoute>
         },
-
         {
           path: "job",
           children: [
@@ -121,7 +130,6 @@ export default function App() {
             }
           ]
         },
-
         {
           path: "resume",
           element:
@@ -142,10 +150,16 @@ export default function App() {
             <ProtectedRoute>
               <RolePage />
             </ProtectedRoute>
+        },
+        {
+          path: "news",
+          element:
+            <ProtectedRoute>
+              <NewsPage />
+            </ProtectedRoute>
         }
       ],
     },
-
 
     {
       path: "/login",
