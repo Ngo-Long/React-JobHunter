@@ -1,4 +1,4 @@
-import { IBackendRes, ICompany, IAccount, IUser, IModelPaginate, IGetAccount, IJob, IResume, IPermission, IRole, ISkill, ISubscribers } from '@/types/backend';
+import { IBackendRes, ICompany, IAccount, IUser, IModelPaginate, IGetAccount, IJob, IResume, IPermission, IRole, ISkill, ISubscribers, INews } from '@/types/backend';
 import axios from 'config/axios-customize';
 
 /**
@@ -249,3 +249,33 @@ export const callFetchSubscriberById = (id: string) => {
     return axios.get<IBackendRes<ISubscribers>>(`/api/v1/subscribers/${id}`);
 }
 
+/**
+ *
+Module News
+ */
+export const callCreateNews = (title: string, content: string, category: string, image: string, author: string, userId: string | number) => {
+    return axios.post<IBackendRes<INews>>('/api/v1/news', {
+        title, content, author, image, category,
+        status: "PUBLISHED",
+        views: 0,
+        user: {
+            "id": userId
+        }
+    })
+}
+
+export const callUpdateNews = (id: string, title: string, content: string, category: string, image: string, author: string, status: string, views: number) => {
+    return axios.put<IBackendRes<INews>>(`/api/v1/news`, { id, title, content, category, image, author, status, views })
+}
+
+export const callDeleteNews = (id: string) => {
+    return axios.delete<IBackendRes<INews>>(`/api/v1/news/${id}`);
+}
+
+export const callFetchNews = (query: string) => {
+    return axios.get<IBackendRes<IModelPaginate<INews>>>(`/api/v1/news?${query}`);
+}
+
+export const callFetchNewsById = (id: string) => {
+    return axios.get<IBackendRes<INews>>(`/api/v1/news/${id}`);
+}

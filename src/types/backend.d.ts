@@ -150,7 +150,6 @@ export interface IPermission {
     deletedAt?: boolean | null;
     createdAt?: string;
     updatedAt?: string;
-
 }
 
 export interface IRole {
@@ -172,6 +171,24 @@ export interface ISubscribers {
     name?: string;
     email?: string;
     skills: string[];
+
+    createdBy?: string;
+    isDeleted?: boolean;
+    deletedAt?: boolean | null;
+    createdAt?: string;
+    updatedAt?: string;
+}
+
+export interface INews {
+    id?: string;
+    title: string;
+    content: string;
+    category: string;
+    image: string;
+    author: string;
+    status: string;
+    views: number;
+
     createdBy?: string;
     isDeleted?: boolean;
     deletedAt?: boolean | null;
