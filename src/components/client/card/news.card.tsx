@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import styles from 'styles/client.module.scss';
 import { isMobile } from 'react-device-detect';
 import { Link } from "react-router-dom";
+import { UserOutlined } from "@ant-design/icons";
 
 interface IProps {
     showPagination?: boolean;
@@ -42,6 +43,7 @@ const NewsCard = (props: IProps) => {
         const res = await callFetchNews(query);
         if (res && res.data) {
             setDisplayNews(res.data.result);
+            console.log(res.data.result);
             setTotal(res.data.meta.total)
         }
         setIsLoading(false)
@@ -83,20 +85,36 @@ const NewsCard = (props: IProps) => {
                                 <Col span={24} md={6} key={item.id}>
                                     <Card
                                         onClick={() => handleViewDetailNews(item)}
-                                        style={{ height: 350 }}
+                                        style={{ height: "100%" }}
                                         hoverable
                                         cover={
                                             <div className={styles["card-customize"]} >
                                                 <img
-                                                    style={{ maxWidth: "200px" }}
+                                                    style={{ maxWidth: "200px", height: "160px" }}
                                                     alt="example"
-                                                    src={`${import.meta.env.VITE_BACKEND_URL}/storage/news/${item?.image}`}
+                                                    src={`${import.meta.env.VITE_BACKEND_URL}/storage/news/${item.image}`}
                                                 />
                                             </div>
                                         }
                                     >
                                         <Divider />
                                         <h3 style={{ textAlign: "center" }}>{item.title}</h3>
+
+                                        <p style={{
+                                            color: "#333",
+                                            display: "-webkit-box",
+                                            WebkitBoxOrient: "vertical",
+                                            WebkitLineClamp: 4,
+                                            overflow: "hidden",
+                                            textOverflow: "ellipsis"
+                                        }}>
+                                            {item.content}
+                                        </p>
+
+                                        <p style={{ marginLeft: "4px" }}>
+                                            <UserOutlined />
+                                            {item.author}
+                                        </p>
                                     </Card>
                                 </Col>
                             )

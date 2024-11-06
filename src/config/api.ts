@@ -253,10 +253,9 @@ export const callFetchSubscriberById = (id: string) => {
  *
 Module News
  */
-export const callCreateNews = (title: string, content: string, category: string, image: string, author: string, userId: string | number) => {
+export const callCreateNews = (title: string, content: string, category: string, image: string, author: string, status: string, userId: string | number) => {
     return axios.post<IBackendRes<INews>>('/api/v1/news', {
-        title, content, author, image, category,
-        status: "PUBLISHED",
+        title, content, category, image, author, status,
         views: 0,
         user: {
             "id": userId

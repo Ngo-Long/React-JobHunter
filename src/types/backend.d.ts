@@ -181,13 +181,13 @@ export interface ISubscribers {
 
 export interface INews {
     id?: string;
-    title: string;
-    content: string;
-    category: string;
+    title?: string;
+    content?: string;
+    category?: string;
     image: string;
-    author: string;
-    status: string;
-    views: number;
+    author?: string;
+    status?: string;
+    views?: number;
 
     createdBy?: string;
     isDeleted?: boolean;

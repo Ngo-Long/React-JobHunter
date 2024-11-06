@@ -10,6 +10,7 @@ import { callCreateNews, callUpdateNews, callUploadSingleFile } from "@/config/a
 import { INews } from "@/types/backend";
 import { v4 as uuidv4 } from 'uuid';
 import enUS from 'antd/lib/locale/en_US';
+import { useAppSelector } from "@/redux/hooks";
 
 interface IProps {
     openModal: boolean;
@@ -46,6 +47,8 @@ const ModalNews = (props: IProps) => {
 
     const [value, setValue] = useState<string>("");
     const [form] = Form.useForm();
+
+    const user = useAppSelector(state => state.account.user);
 
     useEffect(() => {
         if (dataInit?.id && dataInit?.content) {
@@ -89,7 +92,7 @@ const ModalNews = (props: IProps) => {
             }
         } else {
             //create
-            const res = await callCreateNews(title, value, category, dataImage[0].name, author, status);
+            const res = await callCreateNews(title, value, category, dataImage[0].name, author, status, user.id);
             if (res.data) {
                 message.success("Thêm mới bản tin thành công");
                 handleReset();
@@ -242,7 +245,7 @@ const ModalNews = (props: IProps) => {
                                 >
                                     <ConfigProvider locale={enUS}>
                                         <Upload
-                                            name="logo"
+                                            name="image"
                                             listType="picture-card"
                                             className="avatar-uploader"
                                             maxCount={1}
@@ -303,18 +306,6 @@ const ModalNews = (props: IProps) => {
                                     }}
                                     placeholder="Chọn trạng thái"
                                     rules={[{ required: true, message: 'Vui lòng chọn trạng thái!' }]}
-                                />
-                            </Col>
-
-                            <Col span={16}>
-                                <ProFormTextArea
-                                    label="Địa chỉ"
-                                    name="address"
-                                    rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}
-                                    placeholder="Nhập địa chỉ công ty"
-                                    fieldProps={{
-                                        autoSize: { minRows: 4 }
-                                    }}
                                 />
                             </Col>
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { CodeOutlined, ContactsOutlined, FireOutlined, LogoutOutlined, MenuFoldOutlined, RiseOutlined, TwitterOutlined } from '@ant-design/icons';
+import { CodeOutlined, ContactsOutlined, FileProtectOutlined, FireOutlined, LogoutOutlined, MenuFoldOutlined, RiseOutlined, TwitterOutlined } from '@ant-design/icons';
 import { Avatar, Drawer, Dropdown, MenuProps, Space, message } from 'antd';
 import { Menu, ConfigProvider } from 'antd';
 import styles from '@/styles/client.module.scss';
@@ -44,6 +44,11 @@ const Header = (props: any) => {
             label: <Link to={'/company'}>Top Công ty IT</Link>,
             key: '/company',
             icon: <RiseOutlined />,
+        },
+        {
+            label: <Link to={'/news'}>Tư vấn nghề nghiệp</Link>,
+            key: '/news',
+            icon: <FileProtectOutlined />
         }
     ];
 

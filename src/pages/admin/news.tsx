@@ -59,18 +59,27 @@ const NewsPage = () => {
             hideInSearch: true,
         },
         {
-            title: 'Name',
-            dataIndex: 'name',
+            title: 'Tiêu đề',
+            dataIndex: 'title',
             sorter: true,
         },
         {
-            title: 'Address',
-            dataIndex: 'address',
+            title: 'Tác giả',
+            dataIndex: 'author',
             sorter: true,
         },
-
         {
-            title: 'CreatedAt',
+            title: 'Phân loại',
+            dataIndex: 'category',
+            sorter: true,
+        },
+        {
+            title: 'Trạng thái',
+            dataIndex: 'status',
+            sorter: true,
+        },
+        {
+            title: 'Ngày tạo',
             dataIndex: 'createdAt',
             width: 200,
             sorter: true,
@@ -82,7 +91,7 @@ const NewsPage = () => {
             hideInSearch: true,
         },
         {
-            title: 'UpdatedAt',
+            title: 'Ngày sửa',
             dataIndex: 'updatedAt',
             width: 200,
             sorter: true,
@@ -152,13 +161,11 @@ const NewsPage = () => {
             filter: ""
         }
 
-
-
-        if (clone.name) q.filter = `${sfLike("name", clone.name)}`;
-        if (clone.address) {
-            q.filter = clone.name ?
-                q.filter + " and " + `${sfLike("address", clone.address)}`
-                : `${sfLike("address", clone.address)}`;
+        if (clone.title) q.filter = `${sfLike("title", clone.title)}`;
+        if (clone.author) {
+            q.filter = clone.title ?
+                q.filter + " and " + `${sfLike("author", clone.author)}`
+                : `${sfLike("author", clone.author)}`;
         }
 
         if (!q.filter) delete q.filter;
@@ -166,11 +173,11 @@ const NewsPage = () => {
         let temp = queryString.stringify(q);
 
         let sortBy = "";
-        if (sort && sort.name) {
-            sortBy = sort.name === 'ascend' ? "sort=name,asc" : "sort=name,desc";
+        if (sort && sort.title) {
+            sortBy = sort.title === 'ascend' ? "sort=title,asc" : "sort=title,desc";
         }
-        if (sort && sort.address) {
-            sortBy = sort.address === 'ascend' ? "sort=address,asc" : "sort=address,desc";
+        if (sort && sort.author) {
+            sortBy = sort.author === 'ascend' ? "sort=thor,asc" : "sort=thor,desc";
         }
         if (sort && sort.createdAt) {
             sortBy = sort.createdAt === 'ascend' ? "sort=createdAt,asc" : "sort=createdAt,desc";
@@ -191,9 +198,7 @@ const NewsPage = () => {
 
     return (
         <div>
-            <Access
-                permission={ALL_PERMISSIONS.NEWS.GET_PAGINATE}
-            >
+            <Access permission={ALL_PERMISSIONS.NEWS.GET_PAGINATE}>
                 <DataTable<INews>
                     actionRef={tableRef}
                     headerTitle="Danh sách Công Ty"
@@ -234,6 +239,7 @@ const NewsPage = () => {
                     }}
                 />
             </Access>
+
             <ModalNews
                 openModal={openModal}
                 setOpenModal={setOpenModal}
